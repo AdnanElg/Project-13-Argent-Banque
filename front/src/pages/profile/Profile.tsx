@@ -1,11 +1,7 @@
-import './Profile.scss';
+import "./Profile.scss";
 
 const Profile = () => {
-    return (
-        <div>
-            <h1>Hello Profile</h1>
-        </div>
-    );
+  return <main></main>;
 };
 
 export default Profile;

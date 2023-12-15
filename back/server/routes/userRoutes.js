@@ -4,7 +4,7 @@ const userController = require('../controllers/userController')
 const tokenValidation = require('../middleware/tokenValidation')
 
 router.post('/signup', userController.createUser)
-
+ 
 router.post('/login', userController.loginUser)
 
 router.post(

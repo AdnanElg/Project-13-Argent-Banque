@@ -1,11 +1,11 @@
 import "./Banner.scss";
 
 const Banner = () => {
-    return (
-        <div>
-            <h1>Hello Banner</h1>
-        </div>
-    );
+  return (
+    <section className="section">
+      <div className="section__banner"></div>
+    </section>
+  );
 };
 
 export default Banner;

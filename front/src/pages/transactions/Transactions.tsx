@@ -1,11 +1,7 @@
 import "./Transactions.scss";
 
 const Transactions = () => {
-    return (
-        <div>
-            <h1>Hello Transactions</h1>
-        </div>
-    );
+  return <main></main>;
 };
 
 export default Transactions;

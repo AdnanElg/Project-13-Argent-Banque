@@ -1,0 +1,14 @@
+// Style Footer :
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 2px solid #ccc;
+  padding: 2rem 0 1.5rem;
+
+  p {
+    font-size: 16px;
+    font-weight: 300;
+    color: #2c3e50;
+  }
+}
