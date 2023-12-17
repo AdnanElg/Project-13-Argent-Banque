@@ -9,6 +9,7 @@ const Navbar = () => {
         <div className="nav__logo">
           <NavLink to="/">
             <img src={argentBankLogo} alt="Argent Bank Logo" />
+            <h1>Argent Bank</h1>
           </NavLink>
         </div>
         <div className="nav__login">
