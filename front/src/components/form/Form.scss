@@ -1,0 +1,71 @@
+// Style Form :
+.container__form {
+  box-sizing: border-box;
+  background-color: white;
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 3rem;
+  padding: 2rem;
+
+  i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #2c3e50;
+    font-weight: 600;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 25px;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 25px;
+  }
+
+  &__input {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 1rem;
+
+    label {
+      font-weight: bold;
+    }
+
+    input {
+      padding: 5px;
+      font-size: 1.2rem;
+    }
+
+    &__error {
+      color: red;
+      font-weight: 600;
+      font-size: 14px;
+      margin-top: 5px;
+      line-height: 20px;
+    }
+  }
+
+  &__check {
+    display: flex;
+
+    label {
+      margin-left: 0.25rem;
+    }
+  }
+
+  &__btn {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    border-color: #00bc77;
+    background-color: #00bc77;
+    color: #fff;
+    cursor: pointer;
+  }
+}

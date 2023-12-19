@@ -1,7 +1,12 @@
 import "./NotFound.scss";
+import Error from "../../components/error/Error";
 
 const NotFound = () => {
-  return <div></div>;
+  return (
+    <main className="container__notfound">
+      <Error />
+    </main>
+  );
 };
 
 export default NotFound;
