@@ -8,7 +8,9 @@ header {
     background-color: #fff;
 
     &__logo {
-      display: block;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       a {
         display: flex;
@@ -41,7 +43,9 @@ header {
     }
 
     &__login {
-      display: block;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       a {
         display: flex;

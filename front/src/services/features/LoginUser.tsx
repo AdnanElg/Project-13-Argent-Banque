@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+type initialStateType = {
+  isLogin: boolean,
+  token: null | string,
+} 
+
+const initialState:initialStateType = {
   isLogin: false,
   token: null,
 };

@@ -14,7 +14,7 @@ const Form = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
@@ -41,6 +41,7 @@ const Form = () => {
       throw new Error(`Erreur d'authentification : ${error}`);
     } 
   };
+  
   return (
     <section className="container__form">
       <i className="fa fa-user-circle sign-in-icon"></i>
