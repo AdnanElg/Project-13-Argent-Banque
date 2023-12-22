@@ -6,6 +6,7 @@ import {
   setFirstName,
   setLastName,
 } from "../../services/features/GetUserProfile";
+import { LoginUseType } from "../../services/features/LoginUser";
 import axios from "axios";
 
 const User = () => {
@@ -19,7 +20,8 @@ const User = () => {
   const lastName = useSelector(
     (state: getUserProfile) => state.getUserProfile.lastName
   );
-  const token = useSelector((state) => state.loginUser.token);
+
+  const token = useSelector((state: LoginUseType) => state.loginUser.token);
 
   const handleEdit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -39,27 +41,27 @@ const User = () => {
     setIsEditing(false);
   };
 
-  const handleSave = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    // try {
-    //   const response = await axios.put(
-    //     "http://localhost:3001/api/v1/user/login",
-    //     {
-    //       headers: {
-    //         Authorization: "Bearer " + token,
-    //       },
-    //     },
-    //     {
-    //       firstName: firstName,
-    //       lastName: lastName,
-    //     }
-    //   );
-    //   if (response.status === 200) {
-    //     console.log(response.data);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const response = await axios.put(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          firstName: firstName,
+          lastName: lastName,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        setIsEditing(false);
+      }
+    } catch (error) {
+      throw new Error(`An error occurred while updating the profile, ${error}`);
+    }
   };
 
   return (
@@ -67,7 +69,7 @@ const User = () => {
       {isEditing ? (
         <>
           <h1>Welcome back</h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="block__input">
               <input
                 type="text"
@@ -81,9 +83,7 @@ const User = () => {
               />
             </div>
             <div className="block__btn">
-              <button type="submit" onSubmit={handleSave}>
-                Save
-              </button>
+              <button type="submit">Save</button>
               <button type="submit" onClick={handleCancel}>
                 Cancel
               </button>
