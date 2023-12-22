@@ -1,56 +1,80 @@
 import "./Navbar.scss";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import argentBankLogo from "../../assets/img/argentBankLogo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { setFirstName, setLastName } from "../../services/features/GetUserProfile";
+import {
+  setFirstName,
+  setLastName,
+} from "../../services/features/GetUserProfile";
 import { setLogin, setToken } from "../../services/features/LoginUser";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import spinner from "../../assets/svg/spinner.svg";
 import axios from "axios";
+import { LoginUseType } from "../../services/features/LoginUser";
+import { getUserProfile } from "../../services/features/GetUserProfile";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const loginUser = useSelector((state) => state.loginUser.isLogin);
-  const firstName = useSelector((state) => state.getUserProfile.firstName);
-  const token = useSelector((state) => state.loginUser.token);
-  const storedToken = localStorage.getItem('TOKEN');
-
+  const loginUser = useSelector(
+    (state: LoginUseType) => state.loginUser.isLogin
+  );
+  const firstName = useSelector(
+    (state: getUserProfile) => state.getUserProfile.firstName
+  );
+  const token = localStorage.getItem("TOKEN");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (storedToken) {
+    if (token === null && window.location.pathname === "/profile") {
+      navigate("/login");
+      dispatch(setLogin(false));
+      dispatch(setToken(null));
+    } else if (token) {
       dispatch(setLogin(true));
-      dispatch(setToken(storedToken));
-    }
-    
-    const getUserProfile = async () => {
-      try {
-        const response = await axios.post(
-          'http://localhost:3001/api/v1/user/profile',{},
-          {
-            headers: {
-              'Authorization': 'Bearer ' + token,
-            },
+      dispatch(setToken(token));
+
+      const getUserProfile = async () => {
+        try {
+          setIsLoading(true);
+          const response = await axios.post(
+            "http://localhost:3001/api/v1/user/profile",
+            {},
+            {
+              headers: {
+                Authorization: "Bearer " + token,
+              },
+            }
+          );
+          if (response.status === 200) {
+            dispatch(setFirstName(response.data.body.firstName));
+            dispatch(setLastName(response.data.body.lastName));
+            setIsLoading(false);
+            setError(false);
           }
-        );
-        if (response.status === 200) {
-          dispatch(setFirstName(response.data.body.firstName));
-          dispatch(setLastName(response.data.body.lastName));
+        } catch (error) {
+          setError(true);
+          setIsLoading(false);
+          throw new Error(
+            `Error retrieving user profile. Please try again later, ${error}`
+          );
         }
-      } catch (error) {
-        throw new Error(`Error retrieving user profile. Please try again later, ${error}`)
+      };
+
+      if (loginUser) {
+        getUserProfile();
       }
-    };
-
-    if (loginUser) {
-      getUserProfile();
     }
-  }, [dispatch, loginUser, storedToken, token]);
+  }, [dispatch, loginUser, navigate, token]);
 
-
-  const handleLogout = () => {
+  const handleLogout: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
     dispatch(setLogin(false));
     dispatch(setToken(null));
-    localStorage.removeItem('TOKEN');
-  }
+    localStorage.removeItem("TOKEN");
+    navigate("/");
+  };
 
   return (
     <header>
@@ -62,15 +86,27 @@ const Navbar = () => {
           </NavLink>
         </div>
         <div className="nav__login">
-            <NavLink to={loginUser ? "/profile" : "/login"}>
-              <i className="fa fa-user-circle"></i>
-              {loginUser ? <p>{firstName}</p> : <p>Sign In</p>}
-            </NavLink>
+          <NavLink to={loginUser ? "/profile" : "/login"}>
+            <i className="fa fa-user-circle"></i>
+            {loginUser ? (
+              <p>
+                {isLoading ? (
+                  <img src={spinner} alt="loading..." />
+                ) : error ? (
+                  "Null"
+                ) : (
+                  firstName
+                )}
+              </p>
+            ) : (
+              <p>Sign In</p>
+            )}
+          </NavLink>
           {loginUser && (
-            <NavLink to="/">
+            <button type="submit" onClick={handleLogout}>
               <i className="fa fa-sign-out"></i>
-              <p onClick={handleLogout}>Sign Out</p>
-            </NavLink>
+              <p>Sign Out</p>
+            </button>
           )}
         </div>
       </nav>

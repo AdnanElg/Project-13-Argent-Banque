@@ -1,13 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
- 
-export type UserProfileState = {
+
+export type InitialStateType = {
   firstName: null | string;
   lastName: null | string;
 };
 
-const initialState: UserProfileState = {
+export type getUserProfile = {
+  getUserProfile: {
+    firstName: null | string;
+    lastName: null | string;
+  };
+};
+
+const initialState: InitialStateType = {
   firstName: null,
-  lastName: null
+  lastName: null,
 };
 
 const getUserProfile = createSlice({

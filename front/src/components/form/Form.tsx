@@ -9,16 +9,16 @@ import axios from "axios";
 const Form = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginError, setLoginError] = useState(false); 
-  const [loader, setLoader] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
-      setLoader(true)
+      setIsLoading(true);
       const response = await axios.post(
         "http://localhost:3001/api/v1/user/login",
         {
@@ -31,23 +31,28 @@ const Form = () => {
         dispatch(setToken(response.data.body.token));
         navigate("/profile");
         localStorage.setItem("TOKEN", response.data.body.token);
+        setIsLoading(false);
       } else {
-        setLoginError(true)
+        setLoginError(true);
         navigate("/login");
       }
     } catch (error) {
-      setLoader(false);
+      setIsLoading(false);
       setLoginError(true);
       throw new Error(`Erreur d'authentification : ${error}`);
-    } 
+    }
   };
-  
+
   return (
     <section className="container__form">
       <i className="fa fa-user-circle sign-in-icon"></i>
       <h1>Sign In</h1>
-      {loader ? (
-        <img className="container__form__loader" src={spinner} alt="Loading..." />
+      {isLoading ? (
+        <img
+          className="container__form__loader"
+          src={spinner}
+          alt="Loading..."
+        />
       ) : (
         <>
           <form onSubmit={handleSubmit}>
@@ -76,7 +81,9 @@ const Form = () => {
               <label htmlFor="remember-me">Remember me</label>
             </div>
             {loginError ? (
-              <p className="container__form__loginError">Please provide the correct username.</p>
+              <p className="container__form__loginError">
+                Please provide the correct username.
+              </p>
             ) : null}
             <button className="container__form__btn">Sign In</button>
           </form>
