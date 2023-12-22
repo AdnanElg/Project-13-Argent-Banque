@@ -13,6 +13,7 @@ import axios from "axios";
 import { LoginUseType } from "../../services/features/LoginUser";
 import { getUserProfile } from "../../services/features/GetUserProfile";
 
+// ! Ne pas oublier de réglez le probléme : si je retourne en arriére mon sign out reste sur ma navbar ?
 const Navbar = () => {
   const dispatch = useDispatch();
   const loginUser = useSelector(

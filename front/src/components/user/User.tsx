@@ -9,7 +9,7 @@ import {
 import { LoginUseType } from "../../services/features/LoginUser";
 import axios from "axios";
 
-//! Ne pas oublier d'ajouetr le loader et gérez le responsive du formulaire :
+//! Ne pas oublier d'ajouter le loader, gérez le responsive du formulaire, gerez typescrypt  :
 const User = () => {
   const dispatch = useDispatch();
 
@@ -18,6 +18,7 @@ const User = () => {
   const firstName = useSelector(
     (state: getUserProfile) => state.getUserProfile.firstName
   );
+
   const lastName = useSelector(
     (state: getUserProfile) => state.getUserProfile.lastName
   );
