@@ -9,6 +9,7 @@ import {
 import { LoginUseType } from "../../services/features/LoginUser";
 import axios from "axios";
 
+//! Ne pas oublier d'ajouetr le loader et gérez le responsive du formulaire :
 const User = () => {
   const dispatch = useDispatch();
 
