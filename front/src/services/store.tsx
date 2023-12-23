@@ -5,7 +5,7 @@ import getUserProfile from "./features/GetUserProfile";
 const store = configureStore({
   reducer: {
     loginUser,
-    getUserProfile
+    getUserProfile,
   },
 });
 

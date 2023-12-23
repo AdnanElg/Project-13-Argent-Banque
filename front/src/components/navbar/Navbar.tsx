@@ -13,7 +13,6 @@ import axios from "axios";
 import { LoginUseType } from "../../services/features/LoginUser";
 import { getUserProfile } from "../../services/features/GetUserProfile";
 
-// ! Ne pas oublier de réglez le probléme : si je retourne en arriére mon sign out reste sur ma navbar ?
 const Navbar = () => {
   const dispatch = useDispatch();
   const loginUser = useSelector(
@@ -22,7 +21,7 @@ const Navbar = () => {
   const firstName = useSelector(
     (state: getUserProfile) => state.getUserProfile.firstName
   );
-  const token = localStorage.getItem("TOKEN");
+  const token = useSelector((state: LoginUseType) => state.loginUser.token);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -61,6 +60,18 @@ const Navbar = () => {
             `Error retrieving user profile. Please try again later, ${error}`
           );
         }
+        const handlePopstate = () => {
+          dispatch(setLogin(false));
+          dispatch(setToken(null));
+          localStorage.removeItem("TOKEN");
+          navigate("/");
+        };
+
+        window.addEventListener("popstate", handlePopstate);
+
+        return () => {
+          window.removeEventListener("popstate", handlePopstate);
+        };
       };
 
       if (loginUser) {

@@ -30,7 +30,6 @@ const Form = () => {
         dispatch(setLogin(true));
         dispatch(setToken(response.data.body.token));
         navigate("/profile");
-        localStorage.setItem("TOKEN", response.data.body.token);
         setIsLoading(false);
       } else {
         setLoginError(true);

@@ -12,35 +12,37 @@ import axios from "axios";
 //! Ne pas oublier d'ajouter le loader, gérez le responsive du formulaire, gerez typescrypt  :
 const User = () => {
   const dispatch = useDispatch();
-
   const [isEditing, setIsEditing] = useState(false);
-
+  const [editFirstName, setEditFirstName] = useState("");
+  const [editLastName, setEditLastName] = useState("");
   const firstName = useSelector(
     (state: getUserProfile) => state.getUserProfile.firstName
   );
-
   const lastName = useSelector(
     (state: getUserProfile) => state.getUserProfile.lastName
   );
-
   const token = useSelector((state: LoginUseType) => state.loginUser.token);
 
   const handleEdit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setIsEditing(true);
-  };
-
-  const handleChangeFirstName = (e) => {
-    dispatch(setFirstName(e.target.value));
-  };
-
-  const handleChangeLastName = (e) => {
-    dispatch(setLastName(e.target.value));
+    setEditFirstName("");
+    setEditLastName("");
   };
 
   const handleCancel = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setIsEditing(false);
+    setEditFirstName("");
+    setEditLastName("");
+  };
+
+  const handleChangeFirstName = (e) => {
+    setEditFirstName(e.target.value);
+  };
+
+  const handleChangeLastName = (e) => {
+    setEditLastName(e.target.value);
   };
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
@@ -49,8 +51,8 @@ const User = () => {
       const response = await axios.put(
         "http://localhost:3001/api/v1/user/profile",
         {
-          firstName: firstName,
-          lastName: lastName,
+          firstName: editFirstName,
+          lastName: editLastName,
         },
         {
           headers: {
@@ -59,6 +61,8 @@ const User = () => {
         }
       );
       if (response.status === 200) {
+        dispatch(setFirstName(editFirstName));
+        dispatch(setLastName(editLastName));
         setIsEditing(false);
       }
     } catch (error) {
@@ -75,12 +79,14 @@ const User = () => {
             <div className="block__input">
               <input
                 type="text"
-                value={firstName}
+                placeholder={firstName}
+                value={editFirstName}
                 onChange={handleChangeFirstName}
               />
               <input
                 type="text"
-                value={lastName}
+                placeholder={lastName}
+                value={editLastName}
                 onChange={handleChangeLastName}
               />
             </div>

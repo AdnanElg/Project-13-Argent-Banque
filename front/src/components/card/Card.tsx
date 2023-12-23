@@ -2,7 +2,6 @@ import "./Card.scss";
 import iconChat from "../../assets/img/iconChat.png";
 import iconMoney from "../../assets/img/iconMoney.png";
 import iconSecurity from "../../assets/img/iconSecurity.png";
-import { NavLink } from "react-router-dom";
 
 const Card = () => {
   const listItemHome = [
@@ -73,9 +72,7 @@ const Card = () => {
                 <p>{item.text}</p>
               </div>
               <div className="card__profile__account__content-wrapper">
-                <NavLink to="/transactions">
-                  <button type="submit">View transactions</button>
-                </NavLink>
+                <button type="submit">View transactions</button>
               </div>
             </div>
           ))}

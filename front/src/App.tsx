@@ -4,7 +4,6 @@ import Footer from "./components/footer/Footer";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
-import Transactions from "./pages/transactions/Transactions";
 import NotFound from "./pages/notfound/NotFound";
 
 const App = () => {
@@ -15,7 +14,6 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/transactions" element={<Transactions />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />;
