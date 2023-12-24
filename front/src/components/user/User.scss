@@ -10,6 +10,12 @@
     line-height: 45px;
   }
 
+  &__error {
+    font-size: 18px;
+    color: red;
+    font-weight: 600;
+  }
+
   form {
     display: flex;
     justify-content: center;
@@ -32,6 +38,10 @@
         font-weight: 600;
         border-radius: 5px;
         border: none;
+
+        @media (max-width: 450px) {
+          width: 130px;
+        }
       }
     }
 

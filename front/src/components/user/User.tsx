@@ -7,14 +7,16 @@ import {
   setLastName,
 } from "../../services/features/GetUserProfile";
 import { LoginUseType } from "../../services/features/LoginUser";
+import spinner from "../../assets/svg/spinner.svg";
 import axios from "axios";
 
-//! Ne pas oublier d'ajouter le loader, gérez le responsive du formulaire, gerez typescrypt  :
 const User = () => {
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [editFirstName, setEditFirstName] = useState("");
   const [editLastName, setEditLastName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const firstName = useSelector(
     (state: getUserProfile) => state.getUserProfile.firstName
   );
@@ -48,6 +50,7 @@ const User = () => {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const response = await axios.put(
         "http://localhost:3001/api/v1/user/profile",
         {
@@ -61,11 +64,15 @@ const User = () => {
         }
       );
       if (response.status === 200) {
+        setIsLoading(false);
         dispatch(setFirstName(editFirstName));
         dispatch(setLastName(editLastName));
         setIsEditing(false);
+        setError(false);
       }
     } catch (error) {
+      setError(true);
+      setIsLoading(false);
       throw new Error(`An error occurred while updating the profile, ${error}`);
     }
   };
@@ -75,28 +82,42 @@ const User = () => {
       {isEditing ? (
         <>
           <h1>Welcome back</h1>
-          <form onSubmit={handleSubmit}>
-            <div className="block__input">
-              <input
-                type="text"
-                placeholder={firstName}
-                value={editFirstName}
-                onChange={handleChangeFirstName}
-              />
-              <input
-                type="text"
-                placeholder={lastName}
-                value={editLastName}
-                onChange={handleChangeLastName}
-              />
-            </div>
-            <div className="block__btn">
-              <button type="submit">Save</button>
-              <button type="submit" onClick={handleCancel}>
-                Cancel
-              </button>
-            </div>
-          </form>
+          {isLoading ? (
+            <img src={spinner} alt="Loading..." />
+          ) : (
+            <>
+              {error ? (
+                <p className="user__error">
+                  An error has occurred : Unable to update profile
+                </p>
+              ) : (
+                <form onSubmit={handleSubmit}>
+                  <div className="block__input">
+                    <input
+                      type="text"
+                      required
+                      placeholder={firstName}
+                      value={editFirstName}
+                      onChange={handleChangeFirstName}
+                    />
+                    <input
+                      type="text"
+                      required
+                      placeholder={lastName}
+                      value={editLastName}
+                      onChange={handleChangeLastName}
+                    />
+                  </div>
+                  <div className="block__btn">
+                    <button type="submit">Save</button>
+                    <button type="submit" onClick={handleCancel}>
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              )}
+            </>
+          )}
         </>
       ) : (
         <>

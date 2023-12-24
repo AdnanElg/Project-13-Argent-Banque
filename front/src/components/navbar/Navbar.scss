@@ -55,6 +55,7 @@ header {
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-wrap: wrap;
         gap: 10px;
         text-decoration: none;
 
@@ -89,6 +90,7 @@ header {
 
       button {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
         align-items: center;
         gap: 10px;
