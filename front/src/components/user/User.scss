@@ -1,18 +1,21 @@
+@use "../../styles/utils/_variables";
+
+// Style User :
 .user {
-  color: #fff;
+  color: variables.$primary;
   margin-bottom: 2rem;
   text-align: center;
 
   h1 {
     font-size: 35px;
-    color: #fff;
+    color: variables.$primary;
     font-weight: 600;
     line-height: 45px;
   }
 
   &__error {
     font-size: 18px;
-    color: red;
+    color: variables.$senary;
     font-weight: 600;
   }
 
@@ -34,7 +37,7 @@
         width: 200px;
         padding: 10px;
         font-size: 18px;
-        color: #2c3e50;
+        color: variables.$secondary;
         font-weight: 600;
         border-radius: 5px;
         border: none;
@@ -53,8 +56,8 @@
 
       button {
         width: 130px;
-        background-color: #00bc77;
-        color: #fff;
+        background-color: variables.$tertiary;
+        color: variables.$primary;
         font-weight: bold;
         padding: 12px;
         cursor: pointer;
@@ -66,8 +69,8 @@
   }
 
   button {
-    background-color: #00bc77;
-    color: #fff;
+    background-color: variables.$tertiary;
+    color: variables.$primary;
     font-weight: bold;
     padding: 12px;
     cursor: pointer;

@@ -1,4 +1,7 @@
-.login {
+@use "../../styles/utils/_variables";
+
+// Style Login:
+.container__login {
   padding: 10px 0px 200px 0px;
-  background-color: #12002b;
+  background-color: variables.$octonary;
 }

@@ -1,6 +1,13 @@
+// Import modules:
 import "./Footer.scss";
 
-const Footer = () => {
+/**
+ * Components Footer
+ * @component
+ * @author El Ghalbzouri-Adnan <elghalbzouriadnan@gmail.com>
+ * @returns {JSX.Element}
+ */
+const Footer = (): JSX.Element => {
   return (
     <footer className="footer">
       <p>Copyright 2020 Argent Bank</p>
@@ -8,4 +15,5 @@ const Footer = () => {
   );
 };
 
+// Export Footer
 export default Footer;

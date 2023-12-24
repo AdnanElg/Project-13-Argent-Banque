@@ -1,29 +1,39 @@
+// Import modules:
 import "./User.scss";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  getUserProfile,
   setFirstName,
   setLastName,
 } from "../../services/features/GetUserProfile";
-import { LoginUseType } from "../../services/features/LoginUser";
+import {
+  FirstNameType,
+  LastNameType,
+} from "../../types/services/features/GetUserProfileType";
+import { TokenType } from "../../types/services/features/LoginUserType";
 import spinner from "../../assets/svg/spinner.svg";
-import axios from "axios";
+import { updateUser } from "../../services/api/UpdateUser";
 
-const User = () => {
+/**
+ * Components User
+ * @component
+ * @author El Ghalbzouri-Adnan <elghalbzouriadnan@gmail.com>
+ * @returns {JSX.Element}
+ */
+const User = (): JSX.Element => {
   const dispatch = useDispatch();
-  const [isEditing, setIsEditing] = useState(false);
-  const [editFirstName, setEditFirstName] = useState("");
-  const [editLastName, setEditLastName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editFirstName, setEditFirstName] = useState<string>("");
+  const [editLastName, setEditLastName] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const firstName = useSelector(
-    (state: getUserProfile) => state.getUserProfile.firstName
+    (state: FirstNameType) => state.getUserProfile.firstName
   );
   const lastName = useSelector(
-    (state: getUserProfile) => state.getUserProfile.lastName
+    (state: LastNameType) => state.getUserProfile.lastName
   );
-  const token = useSelector((state: LoginUseType) => state.loginUser.token);
+  const token = useSelector((state: TokenType) => state.loginUser.token);
 
   const handleEdit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -39,11 +49,15 @@ const User = () => {
     setEditLastName("");
   };
 
-  const handleChangeFirstName = (e) => {
+  const handleChangeFirstName = (e: {
+    target: { value: SetStateAction<string> };
+  }) => {
     setEditFirstName(e.target.value);
   };
 
-  const handleChangeLastName = (e) => {
+  const handleChangeLastName = (e: {
+    target: { value: SetStateAction<string> };
+  }) => {
     setEditLastName(e.target.value);
   };
 
@@ -51,18 +65,7 @@ const User = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const response = await axios.put(
-        "http://localhost:3001/api/v1/user/profile",
-        {
-          firstName: editFirstName,
-          lastName: editLastName,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await updateUser(editFirstName, editLastName, token);
       if (response.status === 200) {
         setIsLoading(false);
         dispatch(setFirstName(editFirstName));
@@ -96,14 +99,14 @@ const User = () => {
                     <input
                       type="text"
                       required
-                      placeholder={firstName}
+                      placeholder={firstName || ""}
                       value={editFirstName}
                       onChange={handleChangeFirstName}
                     />
                     <input
                       type="text"
                       required
-                      placeholder={lastName}
+                      placeholder={lastName || ""}
                       value={editLastName}
                       onChange={handleChangeLastName}
                     />
@@ -135,4 +138,5 @@ const User = () => {
   );
 };
 
+// Export User
 export default User;

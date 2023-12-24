@@ -1,10 +1,21 @@
+// Import modules:
 import "./Card.scss";
 import iconChat from "../../assets/img/iconChat.png";
 import iconMoney from "../../assets/img/iconMoney.png";
 import iconSecurity from "../../assets/img/iconSecurity.png";
+import {
+  ListItemHomeType,
+  ListItemProfile,
+} from "../../types/components/card/CardType";
 
-const Card = () => {
-  const listItemHome = [
+/**
+ * Components Card
+ * @component
+ * @author El Ghalbzouri-Adnan <elghalbzouriadnan@gmail.com>
+ * @returns {JSX.Element}
+ */
+const Card = (): JSX.Element => {
+  const listItemHome: ListItemHomeType = [
     {
       id: 1,
       picture: iconChat,
@@ -25,7 +36,7 @@ const Card = () => {
     },
   ];
 
-  const listItemProfile = [
+  const listItemProfile: ListItemProfile = [
     {
       id: 4,
       title: "Argent Bank Checking (x8349)",
@@ -82,4 +93,5 @@ const Card = () => {
   );
 };
 
+// Export Card
 export default Card;

@@ -1,18 +1,8 @@
+// Import modules:
 import { createSlice } from "@reduxjs/toolkit";
+import { GetUserProfileType } from "../../types/services/features/GetUserProfileType";
 
-export type InitialStateType = {
-  firstName: null | string;
-  lastName: null | string;
-};
-
-export type getUserProfile = {
-  getUserProfile: {
-    firstName: null | string;
-    lastName: null | string;
-  };
-};
-
-const initialState: InitialStateType = {
+const initialState: GetUserProfileType = {
   firstName: null,
   lastName: null,
 };
@@ -30,5 +20,6 @@ const getUserProfile = createSlice({
   },
 });
 
+// Export reducers :
 export const { setFirstName, setLastName } = getUserProfile.actions;
 export default getUserProfile.reducer;

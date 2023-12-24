@@ -1,3 +1,4 @@
+// Import modules:
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
@@ -6,7 +7,14 @@ import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import NotFound from "./pages/notfound/NotFound";
 
-const App = () => {
+/**
+ * Components app.
+ * @component
+ * @author El Ghalbzouri-Adnan <elghalbzouriadnan@gmail.com>
+ * @returns {JSX.Element}
+ */
+
+const App = (): JSX.Element => {
   return (
     <>
       <Navbar />
@@ -21,4 +29,5 @@ const App = () => {
   );
 };
 
+// Export de l'App :
 export default App;

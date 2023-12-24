@@ -1,3 +1,5 @@
+@use "../../styles/utils/_variables";
+
 // Style Card :
 section {
   .card__home {
@@ -30,21 +32,21 @@ section {
 
       img {
         width: 150px;
-        border: 10px solid #00bc77;
+        border: 10px solid variables.$tertiary;
         border-radius: 50%;
         padding: 1rem;
         margin-bottom: 20px;
       }
 
       h3 {
-        color: #222;
+        color: variables.$quaternary;
         font-size: 1.25rem;
         font-weight: bold;
         margin-bottom: 1rem;
       }
 
       p {
-        color: #222;
+        color: variables.$quaternary;
         font-size: 16px;
         font-weight: 300;
         line-height: 23px;
@@ -77,8 +79,8 @@ section {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border: 1px solid black;
-      background-color: #fff;
+      border: 1px solid variables.$quinary;
+      background-color: variables.$primary;
       width: 80%;
       margin: 0 auto;
       flex-direction: column;
@@ -101,7 +103,7 @@ section {
           padding: 0;
           font-size: 1rem;
           font-weight: 600;
-          color: #2c3e50;
+          color: variables.$secondary;
           padding-bottom: 10px;
         }
 
@@ -109,14 +111,14 @@ section {
           margin: 0;
           font-size: 2.5rem;
           font-weight: 900;
-          color: #222;
+          color: variables.$quaternary;
         }
 
         p {
           padding-top: 10px;
           margin: 0;
           font-weight: 600;
-          color: #2c3e50;
+          color: variables.$secondary;
         }
 
         button {
@@ -126,9 +128,9 @@ section {
           font-size: 1.1rem;
           font-weight: bold;
           margin-top: 1rem;
-          border-color: #00bc77;
-          background-color: #00bc77;
-          color: #fff;
+          border-color: variables.$tertiary;
+          background-color: variables.$tertiary;
+          color: variables.$primary;
           border: none;
           border-radius: 5px;
           cursor: pointer;

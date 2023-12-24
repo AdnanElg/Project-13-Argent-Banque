@@ -1,7 +1,15 @@
+// Import modules:
 import "./Banner.scss";
+import { ListBannerType } from "../../types/components/banner/BannerType";
 
-const Banner = () => {
-  const listBanner = [
+/**
+ * Components Banner
+ * @component
+ * @author El Ghalbzouri-Adnan <elghalbzouriadnan@gmail.com>
+ * @returns {JSX.Element}
+ */
+const Banner = (): JSX.Element => {
+  const listBanner: ListBannerType = [
     {
       id: 1,
       content: "No fees.",
@@ -30,4 +38,5 @@ const Banner = () => {
   );
 };
 
+// Export Banner
 export default Banner;

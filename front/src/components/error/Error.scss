@@ -1,5 +1,7 @@
+@use "../../styles/utils/_variables";
+
 // Style error :
-.container__error {
+.error {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,7 +30,7 @@
     font-size: 33px;
     font-weight: 500;
     width: max-content;
-    color: #ff0002;
+    color: variables.$senary;
     text-align: center;
 
     @media only screen and (max-width: 1200px) {
@@ -44,7 +46,7 @@
   }
 
   span {
-    color: #ff0002;
+    color: variables.$senary;
     font-size: 20px;
     font-weight: 500;
     text-decoration: underline;

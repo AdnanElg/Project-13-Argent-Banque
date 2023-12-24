@@ -1,55 +1,57 @@
+// Import modules:
 import "./Navbar.scss";
-import { NavLink, useNavigate } from "react-router-dom";
 import argentBankLogo from "../../assets/img/argentBankLogo.png";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setFirstName,
   setLastName,
 } from "../../services/features/GetUserProfile";
-import { setLogin, setToken } from "../../services/features/LoginUser";
+import { setIsLogin, setToken } from "../../services/features/LoginUser";
 import { useEffect, useState } from "react";
 import spinner from "../../assets/svg/spinner.svg";
-import axios from "axios";
-import { LoginUseType } from "../../services/features/LoginUser";
-import { getUserProfile } from "../../services/features/GetUserProfile";
+import { getUser } from "../../services/api/GetUser";
+import { FirstNameType } from "../../types/services/features/GetUserProfileType";
+import {
+  IsLoginType,
+  TokenType,
+} from "../../types/services/features/LoginUserType";
 
-const Navbar = () => {
+/**
+ * Components Navbar
+ * @component
+ * @author El Ghalbzouri-Adnan <elghalbzouriadnan@gmail.com>
+ * @returns {JSX.Element}
+ */
+const Navbar = (): JSX.Element => {
   const dispatch = useDispatch();
   const loginUser = useSelector(
-    (state: LoginUseType) => state.loginUser.isLogin
+    (state: IsLoginType) => state.loginUser.isLogin
   );
   const firstName = useSelector(
-    (state: getUserProfile) => state.getUserProfile.firstName
+    (state: FirstNameType) => state.getUserProfile.firstName
   );
-  const token = useSelector((state: LoginUseType) => state.loginUser.token);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const token = useSelector((state: TokenType) => state.loginUser.token);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (token === null && window.location.pathname === "/profile") {
       navigate("/login");
-      dispatch(setLogin(false));
+      dispatch(setIsLogin(false));
       dispatch(setToken(null));
     } else if (token) {
-      dispatch(setLogin(true));
+      dispatch(setIsLogin(true));
       dispatch(setToken(token));
 
       const getUserProfile = async () => {
         try {
           setIsLoading(true);
-          const response = await axios.post(
-            "http://localhost:3001/api/v1/user/profile",
-            {},
-            {
-              headers: {
-                Authorization: "Bearer " + token,
-              },
-            }
-          );
+          const response = await getUser(token);
           if (response.status === 200) {
-            dispatch(setFirstName(response.data.body.firstName));
-            dispatch(setLastName(response.data.body.lastName));
+            dispatch(setFirstName(response.body.firstName));
+            dispatch(setLastName(response.body.lastName));
             setIsLoading(false);
             setError(false);
           }
@@ -60,8 +62,9 @@ const Navbar = () => {
             `Error retrieving user profile. Please try again later, ${error}`
           );
         }
+
         const handlePopstate = () => {
-          dispatch(setLogin(false));
+          dispatch(setIsLogin(false));
           dispatch(setToken(null));
           localStorage.removeItem("TOKEN");
           navigate("/");
@@ -82,7 +85,7 @@ const Navbar = () => {
 
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-    dispatch(setLogin(false));
+    dispatch(setIsLogin(false));
     dispatch(setToken(null));
     localStorage.removeItem("TOKEN");
     navigate("/");
@@ -126,4 +129,5 @@ const Navbar = () => {
   );
 };
 
+// Export Navbar
 export default Navbar;
