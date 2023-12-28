@@ -171,7 +171,7 @@ definitions:
         type: string
         description: type of transaction
         example: Deposit
-      comment:
+      notes:
         type: string
         description: notes of transaction
         example: Transfer from my current account
