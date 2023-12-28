@@ -13,9 +13,9 @@ const Error = (): JSX.Element => {
   return (
     <section className="error">
       <img src={notFound} alt="image 404" />
-      <p>Oups! La page que vous demandez n'existe pas.</p>
+      <p>Oops ! The page you are requesting does not exist.</p>
       <NavLink to="/">
-        <span>Retourner sur la page d'accueil</span>
+        <span>Return to home page</span>
       </NavLink>
     </section>
   );
