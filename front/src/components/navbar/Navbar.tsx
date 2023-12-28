@@ -66,7 +66,6 @@ const Navbar = (): JSX.Element => {
         const handlePopstate = () => {
           dispatch(setIsLogin(false));
           dispatch(setToken(null));
-          localStorage.removeItem("TOKEN");
           navigate("/");
         };
 
