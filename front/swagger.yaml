@@ -22,6 +22,7 @@ paths:
           in: query
           type: string
           description: Month for which transactions should be retrieved
+          required: true
         - name: account
           in: query
           type: string
@@ -33,31 +34,6 @@ paths:
           description: Successful operation
           schema:
             $ref: "#/definitions/TransactionList"
-        "500":
-          description: Internal Server Error
-    post:
-      security:
-        - Bearer: []
-      tags:
-        - Transaction Module
-      summary: Add Transaction
-      description: Add a new transaction for the authenticated user
-      parameters:
-        - in: body
-          name: body
-          description: New transaction information
-          required: true
-          schema:
-            $ref: "#/definitions/TransactionInput"
-      produces:
-        - application/json
-      responses:
-        "201":
-          description: Transaction created successfully
-          schema:
-            $ref: "#/definitions/Transaction"
-        "400":
-          description: Invalid Fields
         "500":
           description: Internal Server Error
   /user/transactions/{transactionId}:
@@ -85,54 +61,76 @@ paths:
           description: Transaction not found
         "500":
           description: Internal Server Error
+  /user/account/transaction/{transactionId}/edit/category:
     put:
       security:
         - Bearer: []
       tags:
         - Transaction Module
-      summary: Update Transaction
-      description: Update information for a specific transaction for the authenticated user
+      summary: Update category of transaction
+      description: API for fetching a user profile to update transaction category
       parameters:
-        - name: transactionId
-          in: path
+        - in: header
           type: string
-          description: ID of the transaction to update
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        - in: path
+          name: transactionId
+          description: User's transaction ID
+          type: integer
           required: true
         - in: body
           name: body
-          description: Updated transaction information
+          description: Signup Payload
           required: true
           schema:
-            $ref: "#/definitions/TransactionInput"
+            $ref: "#/definitions/BodyEditTransactionCategory"
       produces:
         - application/json
       responses:
         "200":
-          description: Successful operation
+          description: User transaction category update successfully
           schema:
-            $ref: "#/definitions/Transaction"
-        "404":
-          description: Transaction not found
+            $ref: "#/definitions/EditTransactionCategory"
+        "400":
+          description: Invalid Fields
         "500":
           description: Internal Server Error
-    delete:
+  /user/account/transaction/{transactionId}/edit/notes:
+    put:
       security:
         - Bearer: []
       tags:
         - Transaction Module
-      summary: Delete Transaction
-      description: Delete a specific transaction for the authenticated user
+      summary: Update notes of transaction
+      description: API for fetching a user profile to update transaction note
       parameters:
-        - name: transactionId
-          in: path
+        - in: header
           type: string
-          description: ID of the transaction to delete
+          name: Authorization
+          description: Attach Bearer JWT token
           required: true
+        - in: path
+          name: transactionId
+          description: User's transaction ID
+          type: integer
+          required: true
+        - in: body
+          name: body
+          description: Signup Payload
+          required: true
+          schema:
+            $ref: "#/definitions/BodyEditTransactionNote"
+      produces:
+        - application/json
       responses:
-        "204":
-          description: Successful operation, no content
-        "404":
-          description: Transaction not found
+        "200":
+          description: User transaction note update successfully
+          schema:
+            $ref: "#/definitions/EditTransactionNote"
+        "400":
+          description: Invalid Fields
         "500":
           description: Internal Server Error
 securityDefinitions:
@@ -181,21 +179,46 @@ definitions:
         type: string
         description: category of transaction
         example: Food
-  TransactionInput:
+  BodyEditTransactionCategory:
     type: object
+    description: Edit category of transaction
     properties:
-      type:
+      category:
         type: string
-        description: type of transaction
-        example: Deposit
+        description: category of transaction
+        example: Car's repair
+  EditTransactionCategory:
+    type: object
+    description: Api response
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      category:
+        type: string
+        description: category of transaction
+        example: Car's repair
+  BodyEditTransactionNote:
+    type: object
+    description: Edit notes of transaction
+    properties:
       comment:
         type: string
         description: notes of transaction
         example: Transfer from my current account
-      category:
+  EditTransactionNote:
+    type: object
+    description: Api response
+    properties:
+      status:
+        type: integer
+      message:
         type: string
-        description: category of transaction
-        example: Food
+      comment:
+        type: string
+        description: notes of transaction
+        example: Transfer from my current account
   ApiResponse:
     type: object
     properties:
