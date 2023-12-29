@@ -18,6 +18,11 @@ paths:
       summary: Get User Transactions
       description: Retrieve all transactions for the current month, grouped by account, for the authenticated user
       parameters:
+        - in: header
+          type: string
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
         - name: month
           in: query
           type: string
@@ -45,6 +50,11 @@ paths:
       summary: Get Transaction Details
       description: Retrieve details of a specific transaction for the authenticated user
       parameters:
+        - in: header
+          type: string
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
         - name: transactionId
           in: path
           type: string
