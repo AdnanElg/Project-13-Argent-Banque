@@ -7,6 +7,7 @@ import {
   ListItemHomeType,
   ListItemProfile,
 } from "../../types/components/card/CardType";
+import { useLocation } from "react-router-dom";
 
 /**
  * Components Card
@@ -15,6 +16,8 @@ import {
  * @returns {JSX.Element}
  */
 const Card = (): JSX.Element => {
+  const location = useLocation();
+
   const listItemHome: ListItemHomeType = [
     {
       id: 1,
@@ -59,7 +62,7 @@ const Card = (): JSX.Element => {
 
   return (
     <section>
-      {window.location.pathname === "/" && (
+      {location.pathname === "/" && (
         <div className="card__home">
           <h2>Features</h2>
           {listItemHome.map((item) => (
@@ -72,7 +75,7 @@ const Card = (): JSX.Element => {
         </div>
       )}
 
-      {window.location.pathname === "/profile" && (
+      {location.pathname === "/profile" && (
         <div className="card__profile">
           <h2>Accounts</h2>
           {listItemProfile.map((item) => (

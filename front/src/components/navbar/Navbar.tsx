@@ -1,7 +1,7 @@
 // Import modules:
 import "./Navbar.scss";
 import argentBankLogo from "../../assets/img/argentBankLogo.png";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setFirstName,
@@ -35,9 +35,10 @@ const Navbar = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    if (token === null && window.location.pathname === "/profile") {
+    if (token === null && location.pathname === "/profile") {
       navigate("/login");
       dispatch(setIsLogin(false));
       dispatch(setToken(null));
@@ -80,13 +81,12 @@ const Navbar = (): JSX.Element => {
         getUserProfile();
       }
     }
-  }, [dispatch, loginUser, navigate, token]);
+  }, [dispatch, location, loginUser, navigate, token]);
 
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     dispatch(setIsLogin(false));
     dispatch(setToken(null));
-    localStorage.removeItem("TOKEN");
     navigate("/");
   };
 
